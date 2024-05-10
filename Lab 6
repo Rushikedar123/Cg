@@ -1,0 +1,63 @@
+#include <iostream>
+#include <cmath>
+
+struct Point {
+    float x, y;
+};
+
+void translate(Point &p, float tx, float ty) {
+    p.x += tx;
+    p.y += ty;
+}
+
+void scale(Point &p, float sx, float sy) {
+    p.x *= sx;
+    p.y *= sy;
+}
+
+void rotate(Point &p, float angle, Point center) {
+    float rad = angle * (M_PI / 180.0);
+    float s = sin(rad), c = cos(rad);
+    p.x = (p.x - center.x) * c - (p.y - center.y) * s + center.x;
+    p.y = (p.x - center.x) * s + (p.y - center.y) * c + center.y;
+}
+
+void reflect(Point &p, char axis) {
+    if (axis == 'x')
+        p.y = -p.y;
+    else if (axis == 'y')
+        p.x = -p.x;
+    else
+        std::cout << "Invalid axis. Please use 'x' or 'y'." << std::endl;
+}
+
+int main() {
+    Point p;
+    float tx, ty, sx, sy, angle;
+    char axis;
+
+    std::cout << "Enter the coordinates of the point: ";
+    std::cin >> p.x >> p.y;
+
+    std::cout << "Enter translation factors (tx, ty): ";
+    std::cin >> tx >> ty;
+    translate(p, tx, ty);
+    std::cout << "Translated point: (" << p.x << ", " << p.y << ")" << std::endl;
+
+    std::cout << "Enter scaling factors (sx, sy): ";
+    std::cin >> sx >> sy;
+    scale(p, sx, sy);
+    std::cout << "Scaled point: (" << p.x << ", " << p.y << ")" << std::endl;
+
+    std::cout << "Enter rotation angle (in degrees) and center point (cx, cy): ";
+    std::cin >> angle >> tx >> ty;
+    rotate(p, angle, {tx, ty});
+    std::cout << "Rotated point: (" << p.x << ", " << p.y << ")" << std::endl;
+
+    std::cout << "Enter the axis for reflection (x or y): ";
+    std::cin >> axis;
+    reflect(p, axis);
+    std::cout << "Reflected point: (" << p.x << ", " << p.y << ")" << std::endl;
+
+    return 0;
+}
