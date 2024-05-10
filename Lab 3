@@ -1,0 +1,36 @@
+#include <iostream>
+#include <cmath>
+
+void drawCircle(int xc, int yc, int r) {
+    int x = 0, y = r;
+    int d = 3 - 2 * r;
+
+    while (x <= y) {
+        // Print points in all quadrants
+        std::cout << "(" << xc + x << ", " << yc + y << ")" << std::endl;
+        std::cout << "(" << xc - x << ", " << yc + y << ")" << std::endl;
+        std::cout << "(" << xc + x << ", " << yc - y << ")" << std::endl;
+        std::cout << "(" << xc - x << ", " << yc - y << ")" << std::endl;
+        std::cout << "(" << xc + y << ", " << yc + x << ")" << std::endl;
+        std::cout << "(" << xc - y << ", " << yc + x << ")" << std::endl;
+        std::cout << "(" << xc + y << ", " << yc - x << ")" << std::endl;
+        std::cout << "(" << xc - y << ", " << yc - x << ")" << std::endl;
+
+        // Incrementing the value of decision parameter based on algorithm
+        if (d <= 0) {
+            d = d + 4 * x + 6;
+        } else {
+            d = d + 4 * (x - y) + 10;
+            y--;
+        }
+        x++;
+    }
+}
+
+int main() {
+    int xc, yc, r;
+    std::cout << "Enter the center and radius of the circle: ";
+    std::cin >> xc >> yc >> r;
+    drawCircle(xc, yc, r);
+    return 0;
+}
