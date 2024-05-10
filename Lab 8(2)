@@ -1,0 +1,52 @@
+#include <iostream>
+#include <windows.h>
+
+void gotoxy(int x, int y) {
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+void drawSquare(int x, int y) {
+    gotoxy(x, y);
+    std::cout << "#####\n";
+    gotoxy(x, y + 1);
+    std::cout << "#   #\n";
+    gotoxy(x, y + 2);
+    std::cout << "#   #\n";
+    gotoxy(x, y + 3);
+    std::cout << "#   #\n";
+    gotoxy(x, y + 4);
+    std::cout << "#####\n";
+}
+
+int main() {
+    int x = 0; // Initial x-coordinate
+    int y = 0; // Initial y-coordinate
+    int directionX = 1; // Movement direction along x-axis
+    int directionY = 1; // Movement direction along y-axis
+
+    // Animation loop
+    while (true) {
+        system("cls"); // Clear the screen
+
+        drawSquare(x, y); // Draw the square at current position
+
+        // Update the position
+        x += directionX;
+        y += directionY;
+
+        // Reverse direction if hitting screen boundaries
+        if (x <= 0 || x >= 75) {
+            directionX *= -1;
+        }
+        if (y <= 0 || y >= 20) {
+            directionY *= -1;
+        }
+
+        Sleep(100); // Pause for a short while to control animation speed
+    }
+
+    return 0;
+}
